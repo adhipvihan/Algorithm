@@ -190,6 +190,13 @@ public class BinaryTreeNode {
 		}
 	}
 	
+	static int NumberOfNodes(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		
+		return 1+NumberOfNodes(root.left)+NumberOfNodes(root.right);
+	}
+	
 	static int MaxElement(BinaryTreeNode root){
 		if(root==null)
 			return -1;
@@ -236,10 +243,11 @@ public class BinaryTreeNode {
 		//InorderWithoutRecursion(bt.root);
 		//Preorder(bt.root);
 		//LevelOrder(bt.root);
-		BinaryTreeNode x = new BinaryTreeNode(2);
+		//BinaryTreeNode x = new BinaryTreeNode(2);
 		//System.out.println(MaxElement(bt.root));
 		//System.out.println(search(bt.root, x).data);
-		System.out.println(fullNodes(bt.root));
+		//System.out.println(fullNodes(bt.root));
+		System.out.println(NumberOfNodes(bt.root));
 	}
 	
 	
