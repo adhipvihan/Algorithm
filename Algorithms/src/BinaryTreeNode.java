@@ -74,6 +74,13 @@ public class BinaryTreeNode {
 			System.out.print(rs.get(i));
 	}
 	
+	static int height(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		
+		return 1+ Math.max(height(root.left), height(root.right));
+	}
+	
 	static boolean checkMirrors(BinaryTreeNode root1,BinaryTreeNode root2){
 		if(root1==null && root2==null)
 			return true;
@@ -124,6 +131,19 @@ public class BinaryTreeNode {
 		for(int i=0;i<rs.size();i++)
 			System.out.print(rs.get(i));
 	}
+	
+	static int diameter(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		
+		int lheight = height(root.right);
+		int rheight = height(root.left);
+		
+		int ldiam = diameter(root.left);
+		int rdiam = diameter(root.right);
+		
+		return Math.max(1+lheight+rheight,Math.max(ldiam,rdiam));
+	}
 
 	
 	
@@ -136,8 +156,9 @@ public class BinaryTreeNode {
 		bt.root.getLeft().setRight(new BinaryTreeNode(5));
 		bt.root.getRight().setLeft(new BinaryTreeNode(6));
 		bt.root.getRight().setRight(new BinaryTreeNode(7));
-		InorderWithoutRecursion(bt.root);
-		Preorder(bt.root);
+		//InorderWithoutRecursion(bt.root);
+		//Preorder(bt.root);
+		System.out.println(diameter(bt.root));
 	}
 	
 	
