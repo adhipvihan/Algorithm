@@ -1,4 +1,6 @@
-//Adhip Vihan//
+			/* Algorithm Practice For Amazon */
+			/* Binary Tree Algorithms*/
+			/* Adhip Vihan */
 
 import java.util.*;
 class BinaryTree{
