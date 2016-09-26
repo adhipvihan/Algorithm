@@ -127,7 +127,7 @@ public class BinaryTreeNode {
 		bt.root.getLeft().setRight(new BinaryTreeNode(5));
 		bt.root.getRight().setLeft(new BinaryTreeNode(6));
 		bt.root.getRight().setRight(new BinaryTreeNode(7));
-		//InorderWithoutRecursion(bt.root);
+		InorderWithoutRecursion(bt.root);
 		Preorder(bt.root);
 	}
 	
