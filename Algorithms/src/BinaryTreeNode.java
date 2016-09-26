@@ -145,7 +145,50 @@ public class BinaryTreeNode {
 		return Math.max(1+lheight+rheight,Math.max(ldiam,rdiam));
 	}
 
+	static void LevelOrder(BinaryTreeNode root){
+		Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+		ArrayList<Integer> rs = new ArrayList<Integer>();
+		q.offer(root);
+		
+		while(!q.isEmpty()){
+			BinaryTreeNode temp = q.poll();
+			rs.add(temp.data);
+			if(temp.getLeft()!=null)
+				q.offer(temp.left);
+			if(temp.getRight()!=null)
+				q.offer(temp.getRight());
+		}
+		for(int i=0;i<rs.size();i++)
+			System.out.print(rs.get(i));
+		
+	}
 	
+	static void LevelOrderWithLevels(BinaryTreeNode root){
+		Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+		ArrayList<ArrayList<Integer>> rs = new ArrayList<ArrayList<Integer>>();
+		
+		q.offer(root);
+		q.offer(null);
+		ArrayList<Integer> curr = new ArrayList<Integer>();
+		while(!q.isEmpty()){
+			BinaryTreeNode temp = q.poll();
+	
+			if(temp!=null){
+				curr.add(temp.data);
+				if(temp.getLeft()!=null)
+					q.offer(temp.left);
+				if(temp.getRight()!=null)
+					q.offer(temp.getRight());
+				}
+			else{
+				ArrayList<Integer> tmp = new ArrayList<Integer>(curr);
+				rs.add(tmp);
+				curr.clear();
+			}
+			if(!q.isEmpty())
+				q.offer(null);
+		}
+	}
 	
 	
 	public static void main(String[] args){
@@ -158,7 +201,7 @@ public class BinaryTreeNode {
 		bt.root.getRight().setRight(new BinaryTreeNode(7));
 		//InorderWithoutRecursion(bt.root);
 		//Preorder(bt.root);
-		System.out.println(diameter(bt.root));
+		LevelOrder(bt.root);
 	}
 	
 	
