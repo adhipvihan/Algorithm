@@ -75,7 +75,45 @@ public class BinaryTreeNode {
 	}
 	
 	static void Preorder(BinaryTreeNode root){
+		Stack<BinaryTreeNode> s = new Stack<BinaryTreeNode>();
+		ArrayList<Integer> rs = new ArrayList<>();
+		s.push(root);
+		BinaryTreeNode prev = null;
+		while(!s.isEmpty()){
+			
+			BinaryTreeNode current = s.peek();
+			if(prev==null || prev.getLeft()==current || prev.getRight()==current ){
+				
+				if(current.left!=null)
+					s.push(current.left);
+				else if(current.right!=null)
+					s.push(current.right);
+				else{
+					s.pop();
+					rs.add(current.data);
+				}
+			}
+			
+			else if(current.left==prev){
+				
+				if(current.right!=null){
+					s.push(current.getRight());
+				}
+				else{
+					s.pop();
+					rs.add(current.data);
+				}
+			}
+			
+			else if(current.right==prev){
+				s.pop();
+				rs.add(current.data);
+			}
+			prev = current;
+		}
 		
+		for(int i=0;i<rs.size();i++)
+			System.out.print(rs.get(i));
 	}
 
 	
@@ -89,7 +127,8 @@ public class BinaryTreeNode {
 		bt.root.getLeft().setRight(new BinaryTreeNode(5));
 		bt.root.getRight().setLeft(new BinaryTreeNode(6));
 		bt.root.getRight().setRight(new BinaryTreeNode(7));
-		InorderWithoutRecursion(bt.root);
+		//InorderWithoutRecursion(bt.root);
+		Preorder(bt.root);
 	}
 	
 	
