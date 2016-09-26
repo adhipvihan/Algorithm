@@ -190,6 +190,40 @@ public class BinaryTreeNode {
 		}
 	}
 	
+	static int MaxElement(BinaryTreeNode root){
+		if(root==null)
+			return -1;
+		int lmax = MaxElement(root.left);
+		int rmax = MaxElement(root.right);
+		
+		return Math.max(Math.max(lmax, rmax), root.data);
+		
+	}
+	
+	static BinaryTreeNode search(BinaryTreeNode root,BinaryTreeNode node){
+		if(root==null)
+			return null;
+		if(root.data==node.data)
+			return root;
+		return search(root.right,node)!=null?search(root.right,node):search(root.left, node);
+	}
+	
+	static int numberOfLeaves(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		if(root.left==null && root.right==null)
+			return 1;
+		return numberOfLeaves(root.left) + numberOfLeaves(root.right);
+	}
+	
+	static int fullNodes(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		if(root.left!=null && root.right!=null)
+			return 1+fullNodes(root.getRight())+fullNodes(root.getLeft());
+		else
+			return 0;
+	}
 	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
@@ -201,7 +235,11 @@ public class BinaryTreeNode {
 		bt.root.getRight().setRight(new BinaryTreeNode(7));
 		//InorderWithoutRecursion(bt.root);
 		//Preorder(bt.root);
-		LevelOrder(bt.root);
+		//LevelOrder(bt.root);
+		BinaryTreeNode x = new BinaryTreeNode(2);
+		//System.out.println(MaxElement(bt.root));
+		//System.out.println(search(bt.root, x).data);
+		System.out.println(fullNodes(bt.root));
 	}
 	
 	
