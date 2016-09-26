@@ -74,6 +74,15 @@ public class BinaryTreeNode {
 			System.out.print(rs.get(i));
 	}
 	
+	static boolean checkMirrors(BinaryTreeNode root1,BinaryTreeNode root2){
+		if(root1==null && root2==null)
+			return true;
+		if(root1!=null && root2!=null && root1.data==root2.data)
+			return checkMirrors(root1.getRight(),root2.getLeft()) && checkMirrors(root1.getLeft(), root2.getRight());
+		
+		return false;
+	}
+	
 	static void Preorder(BinaryTreeNode root){
 		Stack<BinaryTreeNode> s = new Stack<BinaryTreeNode>();
 		ArrayList<Integer> rs = new ArrayList<>();
