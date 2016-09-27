@@ -234,6 +234,27 @@ public class BinaryTreeNode {
 			return 0;
 	}
 	
+	static int maxwidth(BinaryTreeNode root){
+		int max = Integer.MIN_VALUE;
+		int height = height(root);
+		for(int i=0;i<height;i++){
+			int count = numberOfNodesAtLevel(root, i);
+			if(count>max)
+				max=count;
+		}
+		
+		return max;
+	}
+	
+	static int numberOfNodesAtLevel(BinaryTreeNode root,int level){
+		if(root==null)
+			return 0;
+		if(level==1)
+			return 1;
+		else
+			return numberOfNodesAtLevel(root.left,level-1)+ numberOfNodesAtLevel(root.right,level-1);
+	}
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
