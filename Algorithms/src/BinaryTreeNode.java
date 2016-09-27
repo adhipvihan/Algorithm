@@ -255,6 +255,34 @@ public class BinaryTreeNode {
 			return numberOfNodesAtLevel(root.left,level-1)+ numberOfNodesAtLevel(root.right,level-1);
 	}
 	
+	static void printAllPaths(BinaryTreeNode root,int[] path,int pathlen){
+		if(root==null)
+			return;
+		
+		path[pathlen] = root.data;
+		pathlen++;
+		
+		if(root.left==null && root.right==null)
+			printPath(path,pathlen);
+		else{
+			printAllPaths(root.left,path,pathlen);
+			printAllPaths(root.right,path,pathlen);
+		}
+	}
+	
+	static void printPath(int[] p,int plen){
+		System.out.println("\n");
+		for(int i=0;i<plen;i++){
+			System.out.print(p[i]);
+		}
+			
+	}
+	
+	static void printAllPaths(BinaryTreeNode root){
+		int[] path = new int[256];
+		printAllPaths(root, path, 0);
+	}
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
@@ -270,7 +298,8 @@ public class BinaryTreeNode {
 		//System.out.println(MaxElement(bt.root));
 		//System.out.println(search(bt.root, x).data);
 		//System.out.println(fullNodes(bt.root));
-		System.out.println(maxwidth(bt.root));
+		//System.out.println(maxwidth(bt.root));
+		printAllPaths(bt.root);
 	}
 	
 	
