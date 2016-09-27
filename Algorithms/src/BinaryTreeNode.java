@@ -237,7 +237,7 @@ public class BinaryTreeNode {
 	static int maxwidth(BinaryTreeNode root){
 		int max = Integer.MIN_VALUE;
 		int height = height(root);
-		for(int i=0;i<height;i++){
+		for(int i=1;i<=height;i++){
 			int count = numberOfNodesAtLevel(root, i);
 			if(count>max)
 				max=count;
@@ -270,7 +270,7 @@ public class BinaryTreeNode {
 		//System.out.println(MaxElement(bt.root));
 		//System.out.println(search(bt.root, x).data);
 		//System.out.println(fullNodes(bt.root));
-		System.out.println(NumberOfNodes(bt.root));
+		System.out.println(maxwidth(bt.root));
 	}
 	
 	
