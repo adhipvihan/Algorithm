@@ -293,6 +293,36 @@ public class BinaryTreeNode {
 		printAllPaths(root, path, 0);
 	}
 	
+	/* Build tree from Inorder & Preorder Traversal */
+	
+	static void buildTree(int[] preorder,int[] inorder){
+		buildTree(preorder,0,preorder.length-1,inorder,0,inorder.length-1);
+	}
+	
+	static BinaryTreeNode buildTree(int[] preorder,int pstart,int pend,int[] inorder,int istart,int iend){
+		if( (pend>pstart) || (iend>istart) )
+			return null;
+		
+		BinaryTreeNode cur = new BinaryTreeNode(preorder[pstart]);
+		int offset = istart;
+		while(offset<iend){
+			if(inorder[offset]==cur.data)
+				break;
+			offset++;
+		}
+		/* Explanation of what has been done here
+		 * Why are we incrementing postorder start and end like that?
+		 * Because for left node of the root we know that it is +1 in the preorder array
+		 * but we don't know what is the index of the right node. We are basically finding the number of nodes
+		 * between the left node and the right node, so we increment the end by left + the number of nodes in the left sub-tree of root.
+		 * which can be found by inorder index.
+		 * Number of nodes in left subtree of root = start of preorder + (offset-start of inorder)
+		 * */
+		cur.left = buildTree(preorder, pstart+1,pend+ (offset-istart), inorder, istart, offset-1);
+		cur.left = buildTree(preorder, pstart+(offset-istart)+1,pend, inorder, offset+1, iend);
+		
+		return cur;
+	}
 	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
