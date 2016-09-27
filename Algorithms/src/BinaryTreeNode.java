@@ -270,6 +270,16 @@ public class BinaryTreeNode {
 		}
 	}
 	
+	static boolean hasSum(BinaryTreeNode root,int sum){
+		if(root==null)
+			return false;
+		if(root.getLeft()!=null && root.getRight()!=null && root.data==sum)
+			return true;
+		else{
+			return hasSum(root.left, sum-root.data) || hasSum(root.right, sum-root.data);
+		}
+	}
+	
 	static void printPath(int[] p,int plen){
 		System.out.println("\n");
 		for(int i=0;i<plen;i++){
@@ -282,6 +292,7 @@ public class BinaryTreeNode {
 		int[] path = new int[256];
 		printAllPaths(root, path, 0);
 	}
+	
 	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
