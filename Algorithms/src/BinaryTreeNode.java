@@ -324,6 +324,27 @@ public class BinaryTreeNode {
 		return cur;
 	}
 	
+	
+	// Tree From Inorder & Preorder Traversal
+	static BinaryTreeNode builtTree2(int[] inorder,int[] postorder){
+		return buildTree2(postorder,0,postorder.length-1,inorder,0,inorder.length-1);
+	}
+static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postorder,int pstart,int pend){
+		if( (iend>istart) || (pend>pstart) )
+			return null;
+	
+		BinaryTreeNode cur = new BinaryTreeNode(postorder[pend]);
+		int offset=istart;
+		while(offset<iend){
+			if(inorder[offset]==cur.data)
+				break;
+			offset++;
+		}
+		cur.left = buildTree2(inorder, istart, offset-1, postorder, pstart, pend-(offset-istart)-1);
+		cur.right = buildTree2(inorder, offset+1, iend, postorder, pstart+(offset-istart), pend-1);
+		return cur;
+	}
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
