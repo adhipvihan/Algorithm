@@ -122,7 +122,25 @@ public class FixedSizeArrayStack  {
 		s.push(temp);
 	}
 	
-	
+	static int[] StockSpan(int[] arr){
+		if(arr.length==0)
+			return null;
+		int[] result = new int[arr.length];
+		
+		result[0]= 1;
+		Stack<Integer> s = new Stack<Integer>();
+		s.push(0);
+		for(int i=1;i<result.length;i++){
+			
+			while(!s.isEmpty() && arr[s.peek()] <= arr[i])
+				s.pop();
+			
+			result[i] = s.isEmpty()?i+1:(i-s.peek());
+			
+			s.push(i);
+		}
+		return result;
+	}
 	
 	public static void main(String[] args){
 		String xy = "A+B*C";
