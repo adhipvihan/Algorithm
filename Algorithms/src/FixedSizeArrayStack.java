@@ -100,6 +100,30 @@ public class FixedSizeArrayStack  {
 		return result;
 	}
 	
+	static void sortStack(Stack<Integer> s){
+		
+		int temp;
+		if(s.empty())
+			return;
+		else
+			temp = s.pop();
+			sortStack(s);
+			stackHelp(s,temp);
+			
+	}
+	
+	static void stackHelp(Stack<Integer> s,int data){
+	
+		if(s.isEmpty() || s.peek()<data)
+			s.push(data);
+		
+		int temp = s.pop();
+		stackHelp(s, data);
+		s.push(temp);
+	}
+	
+	
+	
 	public static void main(String[] args){
 		String xy = "A+B*C";
 		System.out.println(infixToPostfix(xy));

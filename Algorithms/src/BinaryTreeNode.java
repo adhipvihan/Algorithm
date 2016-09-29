@@ -373,6 +373,10 @@ static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postord
 		
 	}
 	
+	static void verticalSum(BinaryTreeNode root){
+		//
+	}
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
