@@ -355,6 +355,24 @@ static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postord
 		return false;
 	}
 	
+	static BinaryTreeNode LCA(BinaryTreeNode root,BinaryTreeNode node1,BinaryTreeNode node2){
+		if(root==null)
+			return null;
+		if(root.data==node1.data || root.data==node2.data)
+			return root;
+		BinaryTreeNode left = LCA(root.left,node1,node2);
+		BinaryTreeNode right = LCA(root.right,node1,node2);
+		
+		if(left!=null && right!=null)
+			return root;
+		else
+			return left!=null?left:right;
+	}
+	
+	static void zigzag(BinaryTreeNode root){
+		
+	}
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
