@@ -2,44 +2,47 @@ class evenOddPrinter{
 	
 	static boolean PrintOdd = true;
 	
-		public void printOdd(int i){
+		public void printOdd(){
 			
 			synchronized (this) {
-				if(PrintOdd== false){
+				
+				for(int i=1;i<=10;i+=2){
+					
+					if(PrintOdd== false){
+						try{
+							wait();
+						}catch(Exception e){}
+					}
+						System.out.println(i);
+						
+					PrintOdd=false;
 					try{
-						wait();
+						notify();
 					}catch(Exception e){}
 				}
-				
-				System.out.println(i);
-				
-				PrintOdd = false;
-				
-				try{
-					notify();
-				}catch(Exception e){}
 			}
 		}
 		
-	public void printEven(int i){
+	public void printEven(){
 			
 			synchronized (this) {
-				if(PrintOdd== true){
-					try{
-						wait();
-					}catch(Exception e){}
+				
+				for(int i=2;i<=10;i+=2){
+					
+					if(PrintOdd==true){
+						try{
+							wait();
+						}catch(Exception e){}
+					}
+					System.out.println(i);
+					PrintOdd=true;
+						try{
+							notify();
+						}catch(Exception e){}
 				}
-				
-				System.out.println(i);
-				
-				PrintOdd = true;
-				
-				try{
-					notify();
-				}catch(Exception e){}
-			}
 		}
 	
+}
 }
 
 class th1 extends Thread{
@@ -50,8 +53,7 @@ class th1 extends Thread{
 	}
 	
 	public void run(){
-		for(int i=1;i<=10;i+=2)
-			x.printOdd(i);
+			x.printOdd();
 	}
 }
 
@@ -63,8 +65,7 @@ class th2 extends Thread{
 	}
 	
 	public void run(){
-		for(int i=2;i<=10;i+=2)
-			x.printEven(i);
+			x.printEven();
 	}
 }
 
