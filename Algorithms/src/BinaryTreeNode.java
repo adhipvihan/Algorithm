@@ -351,7 +351,7 @@ static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postord
 		if(root.left.getData()==node.data || root.left.getData()==node.data || printAllAncestors(root.left, node) || printAllAncestors(root.right, node))
 			{System.out.println(root.data);
 			return true;
-			}
+			} 
 		return false;
 	}
 	
