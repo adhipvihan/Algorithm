@@ -3,6 +3,7 @@
 			/* Adhip Vihan */
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 class BinaryTree{
 	BinaryTreeNode root;
 	
@@ -186,10 +187,52 @@ public class BinaryTreeNode {
 				ArrayList<Integer> tmp = new ArrayList<Integer>(curr);
 				rs.add(tmp);
 				curr.clear();
+				
+				if(!q.isEmpty())
+					q.offer(null);
 			}
-			if(!q.isEmpty())
-				q.offer(null);
+			
 		}
+	}
+	
+	
+	static int maxwidthIterative(BinaryTreeNode root){
+		if(root==null)
+			return 0;
+		int max = Integer.MIN_VALUE;
+
+		LinkedList<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+		q.add(root);
+		q.add(null);
+
+		ArrayList<LinkedList<BinaryTreeNode>> rs = new ArrayList<LinkedList<BinaryTreeNode>>();
+		LinkedList<BinaryTreeNode> cur = new LinkedList<BinaryTreeNode>();
+
+		while(!q.isEmpty()){
+
+			BinaryTreeNode curr = q.poll();
+
+			if(curr!=null){
+
+				cur.add(curr);
+				if(curr.left!=null)
+					q.add(curr.left);
+				if(curr.right!=null)
+					q.add(curr.right);
+			}
+			else{
+				LinkedList<BinaryTreeNode> temp = new LinkedList<BinaryTreeNode>(cur);
+				if(temp.size()>max)
+					max = temp.size();
+				rs.add(temp);
+				cur.clear();
+
+				if(!q.isEmpty())
+				q.add(null);
+			}
+		}
+		
+		return max;
 	}
 	
 	static int NumberOfNodes(BinaryTreeNode root){
@@ -318,8 +361,8 @@ public class BinaryTreeNode {
 		 * which can be found by inorder index.
 		 * Number of nodes in left subtree of root = start of preorder + (offset-start of inorder)
 		 * */
-		cur.left = buildTree(preorder, pstart+1,pend+ (offset-istart), inorder, istart, offset-1);
-		cur.left = buildTree(preorder, pstart+(offset-istart)+1,pend, inorder, offset+1, iend);
+		cur.left = buildTree(preorder, pstart+1,pend+(offset-istart), inorder, istart, offset-1);
+		cur.right = buildTree(preorder, pstart+(offset-istart)+1,pend, inorder, offset+1, iend);
 		
 		return cur;
 	}
@@ -377,6 +420,120 @@ static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postord
 		//
 	}
 	
+	
+	static String serialize(BinaryTreeNode root){
+		if(root==null)
+			return "";
+		
+		StringBuilder sb = new StringBuilder();
+
+		LinkedList<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+
+		q.add(root);
+		while(!q.isEmpty()){
+			BinaryTreeNode curr = q.poll();
+
+			if(curr!=null){
+				sb.append(curr.data+",");
+				q.add(curr.left);
+				q.add(curr.right);
+			}
+			else
+				sb.append("!,");
+		}
+		return sb.toString().substring(0,sb.length()-1);
+	}
+	
+	static BinaryTreeNode deserialize(String data) {
+	    if(data==null || data.length()==0)
+	        return null;
+	 
+	    String[] arr = data.split(",");
+	    BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(arr[0]));
+	 
+	 
+	    LinkedList<BinaryTreeNode> queue = new LinkedList<BinaryTreeNode>();
+	    queue.add(root);
+	 
+	    int i=1;
+	    while(!queue.isEmpty()){
+	        BinaryTreeNode t = queue.poll();
+	 
+	        if(t==null)
+	            continue;
+	 
+	        if(!arr[i].equals("#")){
+	            t.left = new BinaryTreeNode(Integer.parseInt(arr[i]));    
+	            queue.offer(t.left);
+	 
+	        }else{
+	            t.left = null;
+	            queue.offer(null);
+	        }
+	        i++;
+	 
+	        if(!arr[i].equals("#")){
+	            t.right = new BinaryTreeNode(Integer.parseInt(arr[i]));    
+	            queue.offer(t.right);
+	 
+	        }else{
+	            t.right = null;
+	            queue.offer(null);
+	        }
+	        i++;
+	        
+	    }
+	 
+	    return root;
+	}
+	
+	static BinaryTreeNode Deserialize(String x){
+		
+		if(x==null || x.length()==0)
+			return null;
+
+		String[] temp = x.split(",");
+
+		BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(temp[0]));
+		LinkedList<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+
+		q.add(root);
+		int i=1;
+
+		while(!q.isEmpty()){
+
+			BinaryTreeNode curr = q.poll();
+
+			if(curr==null)
+				continue;
+			
+			if(!temp[i].equals("!")){
+				curr.left = new BinaryTreeNode(Integer.parseInt(temp[i]));
+				q.add(curr.left);
+			}
+			else{
+				curr.left = null;
+				q.add(null);
+			}
+			i++;
+
+			if(!temp[i].equals("!")){
+				curr.right = new BinaryTreeNode(Integer.parseInt(temp[i]));
+				q.add(curr.right);
+			}
+			else{
+				curr.right = null;
+				q.add(null);
+			}
+			i++;
+
+		}
+
+		return root;
+
+	}
+	
+	
 	public static void main(String[] args){
 		BinaryTree bt = new BinaryTree(1);
 		bt.root.setLeft(new BinaryTreeNode(2));
@@ -392,8 +549,11 @@ static BinaryTreeNode buildTree2(int[] inorder,int istart,int iend,int[] postord
 		//System.out.println(MaxElement(bt.root));
 		//System.out.println(search(bt.root, x).data);
 		//System.out.println(fullNodes(bt.root));
-		//System.out.println(maxwidth(bt.root));
-		printAllPaths(bt.root);
+		System.out.println(maxwidthIterative(bt.root));
+		//printAllPaths(bt.root);
+		//System.out.println(serialize(bt.root));
+		//BinaryTreeNode x = Deserialize(serialize(bt.root));
+		//InorderWithoutRecursion(x);
 	}
 	
 	
