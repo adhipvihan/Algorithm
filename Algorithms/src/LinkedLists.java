@@ -49,6 +49,32 @@ public class LinkedLists {
 			
 			length++;
 		}
+	
+		public static Node interwine(Node head){
+		if(head==null || (head.next==null) || (head.next.next==null))
+			return head;
+			
+		
+		Node head1 = head;
+		Node mid = middle(head);
+		Node head2 = mid.next;
+		mid.next = null;
+		
+		head2 = reverseList(head2, null);
+		
+		while((head1!=null && head1.next!=null) || (head2!=null && head2.next!=null)){
+			Node next1 = head1.next;
+			Node next2 = head2.next;
+			
+			head1.next = head2;
+			head2.next = next1;
+			
+			head1 = next1;
+			head2 = next2;
+		}
+		
+		return head;
+	}
 		
 		public void insert(int data, int position){
 			ListNode node = new ListNode(data);
